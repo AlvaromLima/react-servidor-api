@@ -17,6 +17,7 @@
 const express = require('express'); //Servidor api
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const { 
     listarTarefaId, 
@@ -28,6 +29,7 @@ const {
 } = require('./controllers/gerenciador-tarefas.js');
 
 const { finalizarCompra, obterCidadesPorEstado } = require('./controllers/mini-ecommerce.js');
+const upload = require('./controllers/upload.js'); 
 
 //Criar um servidor(express) para acessar a API
 const app = express();
@@ -35,8 +37,10 @@ const port = 3001;
 
 //express sempre que ele receber uma requisição ele automaticamente vai aplicar essas regras do cors
 //para liberar qq acesso de requisição e seguir nosso código
+app.use(express.static('public'));
 app.use(cors());
 app.use(bodyParser.json());
+app.use(fileUpload( {createParentPath: true }));
 
 //modelar uma api restfull
 //get(consultar), post(incluir), put(atualizar), delete(excluir)
@@ -57,6 +61,8 @@ app.put('/gerenciador-tarefas/:id/concluir', concluirTarefa);
 // mini-ecommerce
 app.post('/mini-ecommerce/checkout/finalizar-compra', finalizarCompra);
 app.get('/mini-ecommerce/estado/:siglaEstado/cidades', obterCidadesPorEstado);
+
+app.post('/upload', upload);
 
 // Criar o servidor pelo express
 app.listen(port, () => console.log(`Servidor inicializado na porta ${port}`));
