@@ -12,6 +12,7 @@
 //               3 pasta(s)   330.811.449.344 bytes disponíveis
 
 //npm install express body-parser cors uuidv4 --save
+//npm install --save express-fileupload
 
 //Importar esses arquivos abaixo, ao invés do import do 'React' usamos o require do node.js
 const express = require('express'); //Servidor api
